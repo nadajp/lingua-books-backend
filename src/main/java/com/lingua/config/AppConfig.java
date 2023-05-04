@@ -7,6 +7,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+
 
 @Configuration
 @EntityScan("com.lingua.market.model")
@@ -17,4 +23,18 @@ public class AppConfig {
     public ModelMapper modelMapper() {
        return new ModelMapper();
     }
+
+    // AWS
+    @Bean
+    public AmazonS3 amazonS3() {
+        String region = "us-east-1";
+
+        // Create an Amazon S3 client
+        AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+                .withRegion(region)
+                .build();
+
+        return s3;
+    }
 }
+   
