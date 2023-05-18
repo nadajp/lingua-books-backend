@@ -1,57 +1,88 @@
 package com.lingua.market.controller;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lingua.market.model.Product;
 import com.lingua.market.model.ProductDto;
 import com.lingua.market.repository.ProductRepository;
 import com.lingua.market.service.ProductService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(ProductController.class)
-@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc()
 public class ProductControllerTest {
-
-    @Mock
-    private ProductRepository productRepository;
-
-    @Mock
-    private ProductService productService;
-
-    @InjectMocks
-    private ProductController productController;
 
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private ProductService productService;
+
+    @Mock
+    private ProductRepository productRepository;
+
+    ProductController productController;
+
     @Test
-    public void getAllProducts_shouldReturnListOfProducts() throws Exception {
-        //TODO: Implement this test
+    public void createProduct() throws Exception {
+        MockMultipartFile file = new MockMultipartFile(
+                                    "file", "filename.txt", 
+                                    MediaType.IMAGE_JPEG_VALUE,
+                                    "test data".getBytes());
+        
+        ProductDto product = new ProductDto("Romeo and Juliette", 
+                                            "Shakespeare", 
+                                            10.99, 
+                                            "Good", 
+                                            "English", 
+                                            1L, 1L, 345L);
+
+        when(productService.createProduct(product, file)).thenReturn(product);
+
+
+        MvcResult result = mockMvc.perform(
+            MockMvcRequestBuilders.multipart("/api/v1/products")
+                .file("image", file.getBytes())
+                .contentType(MULTIPART_FORM_DATA)
+                .content(new ObjectMapper().writeValueAsString(product)))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andReturn();
+
+
+        String response = result.getResponse().getContentAsString();
+        assertEquals(response, new ObjectMapper().writeValueAsString(product));
+    }
+
+    @Test
+    public void getAllProducts() throws Exception {
+        List<Product> products = Arrays.asList(new Product("Romeo and Juliette", "Shakespeare", "English", 10.99, 123L));
+
+        when(productRepository.findAll()).thenReturn(products);
+
+        MvcResult result = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/v1/products"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+        assertEquals(response, new ObjectMapper().writeValueAsString(products));
     }
 }

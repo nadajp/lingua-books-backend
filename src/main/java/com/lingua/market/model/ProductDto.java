@@ -4,12 +4,12 @@ public class ProductDto {
     private Long id;
     private String name;
     private String author;
-    private String price;
+    private double price;
     private String condition;
-    private String language;
+    private Language language;
     private String description;
-    private String categoryId;
-    private String subcategoryId;
+    private Long categoryId;
+    private Long subcategoryId;
     private String publisher;
     private String publicationYear;
     private String isbn;
@@ -18,10 +18,22 @@ public class ProductDto {
     private String dimensionLength;
     private String dimensionWidth;
     private String imageUrl;
-    private String sellerId;
+    private Long sellerId;
 
     // Constructors
     public ProductDto() {}
+    
+    public ProductDto(String name, String author, double price, String condition, 
+    Language language, Long categoryId, Long subcategoryId, Long sellerId) {
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.condition = condition;
+        this.language = language;
+        this.categoryId = categoryId;
+        this.subcategoryId = subcategoryId;
+        this.sellerId = sellerId;
+    }
 
     // Getters and Setters
     public Long getId() {
@@ -30,7 +42,6 @@ public class ProductDto {
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
@@ -43,22 +54,22 @@ public class ProductDto {
     public void setTitle(String title) {
         this.author = title;
     }
-    public String getLanguage() {
+    public Language getLanguage() {
         return language;
     }
-    public void setLanguage(String language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
-    public String getSellerId() {
+    public Long getSellerId() {
         return sellerId;
     }
-    public void setSellerId(String sellerId) {
+    public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
     }
     public String getAuthor() {
@@ -103,16 +114,16 @@ public class ProductDto {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
-    public String getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
-    public String getSubcategoryId() {
+    public Long getSubcategoryId() {
         return subcategoryId;
     }
-    public void setSubcategoryId(String subcategoryId) {
+    public void setSubcategoryId(Long subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
     public String getIsbn() {

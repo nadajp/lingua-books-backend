@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,8 +18,13 @@ public class Product {
     
     private String name;
     private String author;
+    
+    @Column(length = 2048)
     private String description;
-    private String language;
+    
+    @ManyToOne
+    private Language language;
+
     private String imageUrl;
     private String publisher;
     
@@ -26,17 +32,17 @@ public class Product {
     private String publicationYear;
     
     @Column(name = "category_id")
-    private String categoryId;
+    private Long categoryId;
     
     @Column(name = "subcategory_id")
-    private String subcategoryId;
+    private Long subcategoryId;
     
     private String isbn;
-    private String price;
+    private Double price;
     private String condition;
     
     @Column(name = "seller_id")
-    private String sellerId;
+    private Long sellerId;
    
     @Column(name = "number_of_pages")
     private String numberOfPages;
@@ -48,16 +54,6 @@ public class Product {
 
     @Column(name = "dimensions_width")
     private String dimensionsWidth;
-
-    // Constructors
-    public Product() {}
-    public Product(String name, String title, String language, String price, String sellerId) {
-        this.name = name;
-        this.author = title;
-        this.language = language;
-        this.price = price;
-        this.sellerId = sellerId;
-    }
 
     // Getters and Setters
     public String getName() {
@@ -72,16 +68,16 @@ public class Product {
     public void setTitle(String title) {
         this.author = title;
     }
-    public String getLanguage() {
+    public Language getLanguage() {
         return language;
     }
-    public void setLanguage(String language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     public Long getId() {
@@ -90,10 +86,10 @@ public class Product {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getSellerId() {
+    public Long getSellerId() {
         return sellerId;
     }
-    public void setSellerId(String sellerId) {
+    public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
     }
     public String getAuthor() {
@@ -138,16 +134,16 @@ public class Product {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
-    public String getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
-    public String getSubcategoryId() {
+    public Long getSubcategoryId() {
         return subcategoryId;
     }
-    public void setSubcategoryId(String subcategoryId) {
+    public void setSubcategoryId(Long subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
     public String getIsbn() {
