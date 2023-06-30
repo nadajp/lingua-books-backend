@@ -9,6 +9,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.junit.jupiter.api.Test;
 
+import com.lingua.market.persistence.model.Seller;
+import com.lingua.market.persistence.model.User;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -3,6 +3,8 @@ package com.lingua.market.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import com.lingua.market.persistence.model.Language;
+
 public class LanguageTest {
 
     @Test

@@ -10,12 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.lingua.market.exception.ResourceNotFoundException;
-import com.lingua.market.model.Language;
-import com.lingua.market.model.Product;
-import com.lingua.market.model.ProductDto;
-import com.lingua.market.repository.LanguageRepository;
-import com.lingua.market.repository.ProductRepository;
+import com.lingua.market.persistence.dao.LanguageRepository;
+import com.lingua.market.persistence.dao.ProductRepository;
+import com.lingua.market.persistence.model.Language;
+import com.lingua.market.persistence.model.Product;
+import com.lingua.market.web.dto.ProductDTO;
+import com.lingua.market.web.exception.ResourceNotFoundException;
 
 @Service
 public class ProductService {
@@ -24,21 +24,20 @@ public class ProductService {
 
     private final LanguageRepository languageRepository;
     
-    @Autowired
     private final AmazonS3 amazonS3;
     
-    @Autowired
     private final ModelMapper modelMapper;
 
-    public ProductService(ProductRepository productRepository, AmazonS3 amazonS3, 
-                          ModelMapper modelMapper, LanguageRepository languageRepository) {
+    public ProductService(ProductRepository productRepository, 
+                          LanguageRepository languageRepository, 
+                          AmazonS3 amazonS3, ModelMapper modelMapper) {
         this.productRepository = productRepository;
         this.languageRepository = languageRepository;
         this.amazonS3 = amazonS3;
         this.modelMapper = modelMapper;
     }
 
-    public ProductDto createProduct(ProductDto productDto, MultipartFile imageFile) throws IOException {
+    public ProductDTO createProduct(ProductDTO productDto, MultipartFile imageFile) throws IOException {
         Product product = modelMapper.map(productDto, Product.class);
 
         Language language = languageRepository.findById(productDto.getLanguage().getId())
@@ -61,7 +60,7 @@ public class ProductService {
             product = productRepository.save(product);
         } 
        
-        return modelMapper.map(product, ProductDto.class);
+        return modelMapper.map(product, ProductDTO.class);
     }
 
     private String uploadImage(MultipartFile imageFile) throws IOException {

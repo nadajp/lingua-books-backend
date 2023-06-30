@@ -3,23 +3,26 @@ package com.lingua.market.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lingua.market.model.Category;
-import com.lingua.market.model.CategoryDTO;
-import com.lingua.market.model.Subcategory;
-import com.lingua.market.model.SubcategoryDTO;
-import com.lingua.market.repository.CategoryRepository;
-import com.lingua.market.repository.SubcategoryRepository;
+import com.lingua.market.persistence.dao.CategoryRepository;
+import com.lingua.market.persistence.dao.SubcategoryRepository;
+import com.lingua.market.persistence.model.Category;
+import com.lingua.market.persistence.model.Subcategory;
+import com.lingua.market.web.dto.CategoryDTO;
+import com.lingua.market.web.dto.SubcategoryDTO;
 
 @Service
 public class CategoryService {
-    @Autowired
-    private SubcategoryRepository subcategoryRepository;
+    
+    private final SubcategoryRepository subcategoryRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+
+    public CategoryService(SubcategoryRepository subcategoryRepository, CategoryRepository categoryRepository) {
+        this.subcategoryRepository = subcategoryRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     public Long getCategoryBySlug(String slug) {
         return categoryRepository.findBySlug(slug).getId();

@@ -21,10 +21,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lingua.market.model.Product;
-import com.lingua.market.model.ProductDto;
-import com.lingua.market.repository.ProductRepository;
+import com.lingua.market.web.dto.ProductDTO;
+import com.lingua.market.persistence.dao.ProductRepository;
+import com.lingua.market.persistence.model.Language;
+import com.lingua.market.persistence.model.Product;
 import com.lingua.market.service.ProductService;
+import com.lingua.market.web.controller.ProductController;
 
 @SpringBootTest
 @AutoConfigureMockMvc()
@@ -43,16 +45,17 @@ public class ProductControllerTest {
 
     @Test
     public void createProduct() throws Exception {
+        Language language = new Language(1L, "English");
         MockMultipartFile file = new MockMultipartFile(
                                     "file", "filename.txt", 
                                     MediaType.IMAGE_JPEG_VALUE,
                                     "test data".getBytes());
         
-        ProductDto product = new ProductDto("Romeo and Juliette", 
+        ProductDTO product = new ProductDTO("Romeo and Juliette", 
                                             "Shakespeare", 
                                             10.99, 
                                             "Good", 
-                                            "English", 
+                                            language, 
                                             1L, 1L, 345L);
 
         when(productService.createProduct(product, file)).thenReturn(product);
@@ -73,7 +76,7 @@ public class ProductControllerTest {
 
     @Test
     public void getAllProducts() throws Exception {
-        List<Product> products = Arrays.asList(new Product("Romeo and Juliette", "Shakespeare", "English", 10.99, 123L));
+        List<Product> products = Arrays.asList(this.getMockProduct());
 
         when(productRepository.findAll()).thenReturn(products);
 
@@ -84,5 +87,17 @@ public class ProductControllerTest {
 
         String response = result.getResponse().getContentAsString();
         assertEquals(response, new ObjectMapper().writeValueAsString(products));
+    }
+
+    private Product getMockProduct() {
+        Product product = new Product();
+        product.setName("Romeo and Juliette");
+        product.setAuthor("Shakespeare");
+        product.setPrice(10.99);
+        product.setDescription("Good");
+        product.setLanguage(new Language(1L, "English"));
+        product.setSellerId(1L);
+        product.setCategoryId(1L);
+        return product;
     }
 }
