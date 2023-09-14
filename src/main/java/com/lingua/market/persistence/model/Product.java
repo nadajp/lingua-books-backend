@@ -17,6 +17,7 @@ public class Product {
     private Long id;
     
     private String name;
+    
     private String author;
     
     @Column(length = 2048)
@@ -26,6 +27,7 @@ public class Product {
     private Language language;
 
     private String imageUrl;
+    
     private String publisher;
     
     @Column(name = "publication_year")

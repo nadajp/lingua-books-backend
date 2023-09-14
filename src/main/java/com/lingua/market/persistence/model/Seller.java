@@ -3,11 +3,7 @@ package com.lingua.market.persistence.model;
 import java.time.Instant;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
-
-import com.lingua.market.model.Address;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,8 +32,23 @@ public class Seller {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    private Address address;
+    @Column(name = "address_street")
+    private String addressStreet;
+
+    @Column(name = "address_number")
+    private String addressNumber;
+
+    @Column(name = "address_city")
+    private String addressCity;
+
+    @Column(name = "address_state")
+    private String addressState;
+
+    @Column(name = "address_zip")
+    private String addressZip;
+
+    @Column(name = "address_country")
+    private String addressCountry;
 
     public Instant getCreatedAt() {
         return this.createdAt;
@@ -45,10 +56,44 @@ public class Seller {
     public Instant getUpdatedAt() {
         return this.updatedAt;
     }
-    public Address getAddress() {
-        return this.address;
+
+    public String getAddressStreet() {
+        return this.addressStreet;
     }
-    public void setAddress(Address address) {
-        this.address = address;
-    } 
+    public void setAddressStreet(String addressStreet) {
+        this.addressStreet = addressStreet;
+    }
+
+    public String getAddressNumber() {
+        return this.addressNumber;
+    }
+    public void setAddressNumber(String addressNumber) {
+        this.addressNumber = addressNumber;
+    }
+    public String getAddressCity() {
+        return this.addressCity;
+    }
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+
+    public String getAddressState() {
+        return this.addressState;
+    }
+    public void setAddressSate(String addressState) {
+        this.addressState = addressState;
+    }
+    public String getAddressZip() {
+        return this.addressZip;
+    }
+    public void setAddressZip(String addressZip) {
+        this.addressZip = addressZip;
+    }
+    public String getAddressCountry() {
+        return this.addressCountry;
+    }
+    public void setAddressCountry(String addressCountry) {
+        this.addressCountry = addressCountry;
+    }
+   
 }

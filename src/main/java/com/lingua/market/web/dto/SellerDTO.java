@@ -1,11 +1,15 @@
 package com.lingua.market.web.dto;
 
-import com.lingua.market.model.Address;
-
 public class SellerDTO {
     private Long id;
     private Long userId;
-    private Address address;
+
+    private String addressStreet;
+    private String addressNumber;
+    private String addressCity;
+    private String addressState;
+    private String addressZip;
+    private String addressCountry;
 
     // Getters and Setters
     public Long getId() {
@@ -20,10 +24,40 @@ public class SellerDTO {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-    public Address getAddress() {
-        return this.address;
+    public String getAddressStreet() {
+        return this.addressStreet;
     }
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressStreet(String addressStreet) {
+        this.addressStreet = addressStreet;
+    }
+    public String getAddressNumber() {
+        return this.addressNumber;
+    }   
+    public void setAddressNumber(String addressNumber) {
+        this.addressNumber = addressNumber;
+    }
+    public String getAddressCity() {
+        return this.addressCity;
+    }
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+    public String getAddressState() {
+        return this.addressState;
+    }
+    public void setAddressState(String addressState) {
+        this.addressState = addressState;
+    }
+    public String getAddressZip() {
+        return this.addressZip;
+    }
+    public void setAddressZip(String addressZip) {
+        this.addressZip = addressZip;
+    }
+    public String getAddressCountry() {
+        return this.addressCountry;
+    }
+    public void setAddressCountry(String addressCountry) {
+        this.addressCountry = addressCountry;
     }
 }

@@ -14,3 +14,4 @@ public class MarketApplication {
 		SpringApplication.run(MarketApplication.class, args);
 	}
 }
+	
