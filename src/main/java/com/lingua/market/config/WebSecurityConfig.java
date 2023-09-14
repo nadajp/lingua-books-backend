@@ -38,7 +38,8 @@ public class WebSecurityConfig {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(11);
     }
-    
+  
+
     @Bean
     public AuthenticationManager authenticationManager(
             CustomUserDetailsService userDetailsService,
@@ -110,7 +111,7 @@ public class WebSecurityConfig {
 	public RegisteredClientRepository registeredClientRepository() {
 		RegisteredClient linguaClient = RegisteredClient.withId("lingua-client")
 				.clientId("lingua-client")
-				.clientSecret("secret")
+				.clientSecret(encoder().encode("secret"))
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
