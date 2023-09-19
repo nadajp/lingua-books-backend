@@ -11,6 +11,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.lingua.market.service.CustomUserDetailsService;
 
 @Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
     @Bean
@@ -103,7 +105,10 @@ public class WebSecurityConfig {
                 .permitAll()
                 .anyRequest().authenticated()
         )
-        .formLogin(Customizer.withDefaults());
+        .formLogin(Customizer.withDefaults())
+        .oauth2ResourceServer((resourceServer) -> resourceServer
+				.jwt(Customizer.withDefaults()));
+
         return http.build();
 	}
 
@@ -115,7 +120,7 @@ public class WebSecurityConfig {
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://127.0.0.1:3000/oauth/lingua-client")
+                .redirectUri("http://127.0.0.1:3000/api/oauth/callback")
 				.postLogoutRedirectUri("http://127.0.0.1:3000")
                 .scope(OidcScopes.OPENID)
 				.scope("user.read")
