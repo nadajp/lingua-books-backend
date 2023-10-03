@@ -7,22 +7,20 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "sellers")
 public class Seller {
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private User user;
+    private String authUser;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -50,6 +48,18 @@ public class Seller {
     @Column(name = "address_country")
     private String addressCountry;
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setAuthUser(String authUser) {
+        this.authUser = authUser;
+    }
+    public String getAuthUser() {
+        return this.authUser;
+    }
     public Instant getCreatedAt() {
         return this.createdAt;
     }
@@ -76,7 +86,6 @@ public class Seller {
     public void setAddressCity(String addressCity) {
         this.addressCity = addressCity;
     }
-
     public String getAddressState() {
         return this.addressState;
     }

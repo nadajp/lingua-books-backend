@@ -1,0 +1,8 @@
+auth0:
+  audience: https://lingua-books.com
+spring:
+  security:
+    oauth2:
+        resourceserver:
+            jwt:
+                issuer-uri: https://dev-rgfdh6gnu8k1zrjw.us.auth0.com/

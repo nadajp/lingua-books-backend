@@ -15,13 +15,13 @@ import com.lingua.market.web.exception.ResourceNotFoundException;
 @Service
 public class SellerService {
     
-    @Autowired
     private final ModelMapper modelMapper;
 
     private SellerRepository sellerRepository;
 
-    public SellerService(ModelMapper modelMapper) {
+    public SellerService(ModelMapper modelMapper, SellerRepository sellerRepository) {
         this.modelMapper = modelMapper;
+        this.sellerRepository = sellerRepository;
     }
 
     public List<SellerDTO> getAllSellers() {
@@ -38,9 +38,9 @@ public class SellerService {
         return modelMapper.map(seller, SellerDTO.class);
     }    
 
-    public SellerDTO createSeller(SellerDTO sellerDTO) {
+    public Seller createSeller(SellerDTO sellerDTO) {
         Seller seller = modelMapper.map(sellerDTO, Seller.class);
         Seller createdSeller = sellerRepository.save(seller);
-        return modelMapper.map(createdSeller, SellerDTO.class);
+        return createdSeller;
     }
 }

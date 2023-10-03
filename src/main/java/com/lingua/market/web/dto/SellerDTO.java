@@ -1,9 +1,7 @@
 package com.lingua.market.web.dto;
 
 public class SellerDTO {
-    private Long id;
-    private Long userId;
-
+    private String authUser;
     private String addressStreet;
     private String addressNumber;
     private String addressCity;
@@ -11,18 +9,11 @@ public class SellerDTO {
     private String addressZip;
     private String addressCountry;
 
-    // Getters and Setters
-    public Long getId() {
-        return this.id;
+    public String getAuthUser() {
+        return this.authUser;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public Long getUserId() {
-        return this.userId;
-    }
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAuthUser(String authUser) {
+        this.authUser = authUser;
     }
     public String getAddressStreet() {
         return this.addressStreet;

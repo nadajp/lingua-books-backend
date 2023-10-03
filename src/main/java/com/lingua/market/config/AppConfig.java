@@ -16,12 +16,12 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 @EnableJpaRepositories("com.lingua.market.persistence.dao")
 public class AppConfig {
     @Bean
-    public ModelMapper modelMapper() {
+    ModelMapper modelMapper() {
        return new ModelMapper();
     }
 
     @Bean
-    public AmazonS3 amazonS3() {
+    AmazonS3 amazonS3() {
         String region = "us-east-1";
 
         AmazonS3 s3 = AmazonS3ClientBuilder.standard()
