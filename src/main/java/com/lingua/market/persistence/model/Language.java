@@ -23,10 +23,6 @@ public class Language {
         this.name = name;
     }
 
-    // @OneToMany(mappedBy = "language")
-    // private List<Product> products;
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }

@@ -62,7 +62,6 @@ public class Product {
     @Column(name = "dimensions_width")
     private String dimensionsWidth;
 
-    // Getters and Setters
     public String getName() {
         return name;
     }

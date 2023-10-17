@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lingua.market.persistence.model.Seller;
 import com.lingua.market.service.SellerService;
 import com.lingua.market.web.dto.SellerDTO;
 
@@ -38,9 +39,9 @@ public class SellerController {
     }
 
     @PostMapping(consumes = {"application/json"}) 
-    public ResponseEntity<SellerDTO> createSeller(@Validated @RequestBody SellerDTO sellerDTO) {
-        SellerDTO createdSellerDTO = sellerService.createSeller(sellerDTO);
-        return ResponseEntity.created(URI.create("/sellers/" + createdSellerDTO.getId()))
-                .body(createdSellerDTO);
+    public ResponseEntity<Seller> createSeller(@Validated @RequestBody SellerDTO sellerDTO) {
+        Seller createdSeller = sellerService.createSeller(sellerDTO);
+        return ResponseEntity.created(URI.create("/sellers/" + createdSeller.getId()))
+                .body(createdSeller);
     }    
 }

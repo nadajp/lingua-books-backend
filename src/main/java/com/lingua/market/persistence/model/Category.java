@@ -18,7 +18,6 @@ public class Category {
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Subcategory> subcategories;
 
-    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -45,5 +44,4 @@ public class Category {
     public void setSubcategories(List<Subcategory> subcategories) {
         this.subcategories = subcategories;
     }
-    
 }

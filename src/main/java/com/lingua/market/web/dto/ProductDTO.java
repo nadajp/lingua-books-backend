@@ -22,7 +22,6 @@ public class ProductDTO {
     private String imageUrl;
     private Long sellerId;
 
-    // Constructors
     public ProductDTO() {}
     
     public ProductDTO(String name, String author, Double price, String condition, 
@@ -37,7 +36,6 @@ public class ProductDTO {
         this.sellerId = sellerId;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

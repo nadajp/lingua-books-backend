@@ -2,7 +2,6 @@ package com.lingua.market.web.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,8 +23,11 @@ import com.lingua.market.web.exception.ResourceNotFoundException;
 @RequestMapping("/api/v1/languages")
 public class LanguageController {
     
-    @Autowired
     private LanguageRepository languageRepository;
+
+    public LanguageController(LanguageRepository languageRepository) {
+        this.languageRepository = languageRepository;
+    }
 
     @GetMapping
     public List<Language> getLanguages() {

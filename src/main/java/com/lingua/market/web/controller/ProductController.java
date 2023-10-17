@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,11 +28,11 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @Autowired
     private ProductRepository productRepository;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ProductRepository productRepository) {
         this.productService = productService;
+        this.productRepository = productRepository;
     }
     
     @GetMapping
@@ -60,7 +58,6 @@ public class ProductController {
     }    
 
     @PostMapping(consumes = {"multipart/form-data"})
-    
     public ResponseEntity<ProductDTO> createProduct (@RequestPart("product") @Validated ProductDTO productDto,
                                                      @RequestPart(name = "image", required = false) MultipartFile imageFile) {
         
