@@ -51,9 +51,7 @@ public class ProductService {
                 String imageUrl = uploadImage(imageFile);
                 product.setImageUrl(imageUrl);
             } catch (IOException e) {
-                // Handle any exceptions that occur during image upload
                 System.err.println("Error uploading image: " + e.getMessage());
-                // Optionally, you can rethrow the exception or handle it differently
                 throw new RuntimeException("Error uploading image", e);
             }
             product = productRepository.save(product);
@@ -63,7 +61,6 @@ public class ProductService {
     }
 
     private String uploadImage(MultipartFile imageFile) throws IOException {
-        // Generate a unique filename for the image
         String fileName = UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
 
         String bucketName = "lingua-books-images";

@@ -20,10 +20,7 @@ public class UserSettings {
     @Id
     private Long id;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private User user;
+    private String authUserId;
     
     @Column(name = "locale")
     private String locale;

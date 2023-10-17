@@ -47,7 +47,6 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 
-        // Apply the CORS configuration on all paths
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 
@@ -56,10 +55,6 @@ public class SecurityConfig {
     
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        /*
-        This is where we configure the security required for our endpoints and setup our app to serve as
-        an OAuth2 Resource Server, using JWT validation.
-        */
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
@@ -70,6 +65,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/v1/sellers").authenticated()
                 .requestMatchers("/api/v1/users/*").authenticated()
                 .requestMatchers("/api/admin").hasAuthority("SCOPE_admin")
+                .requestMatchers(HttpMethod.POST, "api/v1/products/").hasAuthority("SCOPE_create:product")
                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(Customizer.withDefaults()
@@ -80,11 +76,6 @@ public class SecurityConfig {
 
     @Bean
     JwtDecoder jwtDecoder() {
-        /*
-        By default, Spring Security does not validate the "aud" claim of the token, to ensure that this token is
-        indeed intended for our app. Adding our own validator is easy to do:
-        */
-
         NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)
                 JwtDecoders.fromOidcIssuerLocation(issuer);
 
