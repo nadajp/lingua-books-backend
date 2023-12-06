@@ -65,11 +65,10 @@ public class ProductController {
         try {
             createdProduct = productService.createProduct(productDto, imageFile);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         }
 
-        // Return a response with the saved product
         return ResponseEntity.created(URI.create("/products/" + createdProduct.getId()))
         .body(createdProduct);
     }

@@ -15,10 +15,12 @@ public class SellerTest {
     public void test_Seller() {
         Seller seller = new Seller();
 
-        seller.setAddressCity("New York");
-
-        assertEquals("New York", seller.getAddressCity());
-
+        seller.setCity("Naples");
+        seller.setState("FL");
+        seller.setCountry("US");
+        assertEquals("Naples", seller.getCity());
+        assertEquals("FL", seller.getState());
+        assertEquals("US", seller.getCountry());
     }
 }
 
