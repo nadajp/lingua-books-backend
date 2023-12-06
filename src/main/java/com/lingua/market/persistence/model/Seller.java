@@ -7,9 +7,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +26,10 @@ public class Seller {
 
     private String authUser;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -30,29 +38,36 @@ public class Seller {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    @Column(name = "address_street")
-    private String addressStreet;
+    @Column(name = "display_name")
+    private String displayName;
 
-    @Column(name = "address_number")
-    private String addressNumber;
+    private String city;
 
-    @Column(name = "address_city")
-    private String addressCity;
+    private String state;
 
-    @Column(name = "address_state")
-    private String addressState;
+    private String country;
 
-    @Column(name = "address_zip")
-    private String addressZip;
+    @Column(name = "postal_code")
+    private String postalCode;
 
-    @Column(name = "address_country")
-    private String addressCountry;
+    @Column(name = "stripe_account_id")
+    private String stripeAccountId;
+
+    @Column(name = "stripe_status")
+    @Enumerated(EnumType.STRING)
+    private StripeStatus stripeStatus;
 
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getDisplayName() {
+        return this.displayName;
+    }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
     public void setAuthUser(String authUser) {
         this.authUser = authUser;
@@ -66,43 +81,47 @@ public class Seller {
     public Instant getUpdatedAt() {
         return this.updatedAt;
     }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public User getUser() {
+        return this.user;
+    }
+    public String getCity() {
+        return this.city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public String getState() {
+        return this.state;
+    }
+    public void setState(String state) {
+        this.state = state;
+    }
+    public String getCountry() {
+        return this.country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-    public String getAddressStreet() {
-        return this.addressStreet;
+    public String getPostalCode() {
+        return this.postalCode;
     }
-    public void setAddressStreet(String addressStreet) {
-        this.addressStreet = addressStreet;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
-
-    public String getAddressNumber() {
-        return this.addressNumber;
+    public String getStripeAccountId() {
+        return this.stripeAccountId;
     }
-    public void setAddressNumber(String addressNumber) {
-        this.addressNumber = addressNumber;
+    public void setStripeAccountId(String stripeAccountId) {
+        this.stripeAccountId = stripeAccountId;
     }
-    public String getAddressCity() {
-        return this.addressCity;
+    public StripeStatus getStripeStatus() {
+        return this.stripeStatus;
     }
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
+    public void setStripeStatus(StripeStatus stripeStatus) {
+        this.stripeStatus = stripeStatus;
     }
-    public String getAddressState() {
-        return this.addressState;
-    }
-    public void setAddressSate(String addressState) {
-        this.addressState = addressState;
-    }
-    public String getAddressZip() {
-        return this.addressZip;
-    }
-    public void setAddressZip(String addressZip) {
-        this.addressZip = addressZip;
-    }
-    public String getAddressCountry() {
-        return this.addressCountry;
-    }
-    public void setAddressCountry(String addressCountry) {
-        this.addressCountry = addressCountry;
-    }
-   
 }
