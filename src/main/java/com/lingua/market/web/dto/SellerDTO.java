@@ -2,12 +2,12 @@ package com.lingua.market.web.dto;
 
 public class SellerDTO {
     private String authUser;
-    private String addressStreet;
-    private String addressNumber;
-    private String addressCity;
-    private String addressState;
-    private String addressZip;
-    private String addressCountry;
+    private String city;
+    private String state;
+    private String country;
+    private String postalCode;
+    private String stripeAccountId;
+    private String stripeStatus;
 
     public String getAuthUser() {
         return this.authUser;
@@ -15,40 +15,40 @@ public class SellerDTO {
     public void setAuthUser(String authUser) {
         this.authUser = authUser;
     }
-    public String getAddressStreet() {
-        return this.addressStreet;
+    public String getCity() {
+        return this.city;
     }
-    public void setAddressStreet(String addressStreet) {
-        this.addressStreet = addressStreet;
+    public void setCity(String city) {
+        this.city = city;
     }
-    public String getAddressNumber() {
-        return this.addressNumber;
-    }   
-    public void setAddressNumber(String addressNumber) {
-        this.addressNumber = addressNumber;
+    public String getState() {
+        return this.state;
     }
-    public String getAddressCity() {
-        return this.addressCity;
+    public void setState(String state) {
+        this.state = state;
     }
-    public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
+    public String getCountry() {
+        return this.country;
     }
-    public String getAddressState() {
-        return this.addressState;
+    public void setCountry(String country) {
+        this.country = country;
     }
-    public void setAddressState(String addressState) {
-        this.addressState = addressState;
+    public String getPostalCode() {
+        return this.postalCode;
     }
-    public String getAddressZip() {
-        return this.addressZip;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
-    public void setAddressZip(String addressZip) {
-        this.addressZip = addressZip;
+    public String getStripeAccountId() {
+        return this.stripeAccountId;
     }
-    public String getAddressCountry() {
-        return this.addressCountry;
+    public void setStripeAccountId(String stripeAccountId) {
+        this.stripeAccountId = stripeAccountId;
     }
-    public void setAddressCountry(String addressCountry) {
-        this.addressCountry = addressCountry;
+    public String getStripeStatus() {
+        return this.stripeStatus;
+    }
+    public void setStripeStatus(String stripeStatus) {
+        this.stripeStatus = stripeStatus;
     }
 }

@@ -11,5 +11,5 @@ import com.lingua.market.persistence.model.Subcategory;
 @Repository
 public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> {
     List<Subcategory> findByParent(Category parent);
-    Subcategory findBySlug(String slug);
+    <Optional> Subcategory findBySlug(String slug);
 }
