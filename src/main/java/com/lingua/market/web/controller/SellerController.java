@@ -35,20 +35,14 @@ public class SellerController {
     public ResponseEntity<List<SellerDTO>> getAllSellers() {
         return ResponseEntity.ok().body(sellerService.getAllSellers());
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<SellerDTO> getSellerById(@PathVariable(value = "id") Long sellerId) {
-        return ResponseEntity.ok().body(sellerService.getSellerById(sellerId));
-    }
-
     @GetMapping("/{authUser}")
     public ResponseEntity<SellerDTO> getSellerByAuthId(@PathVariable(value = "authUser") String authUser) {
         return ResponseEntity.ok().body(sellerService.getSellerByAuthUser(authUser));
     }
 
     @PostMapping(consumes = {"application/json"}) 
-    public ResponseEntity<Seller> createSeller(@Validated @RequestBody SellerDTO sellerDTO) {
-        Seller createdSeller;
+    public ResponseEntity<SellerDTO> createSeller(@Validated @RequestBody SellerDTO sellerDTO) {
+        SellerDTO createdSeller;
         try {
             createdSeller = sellerService.createSeller(sellerDTO);
             return ResponseEntity.created(URI.create("/sellers/" + createdSeller.getId()))
@@ -59,8 +53,8 @@ public class SellerController {
     }    
 
     @PutMapping("/{authUser}")
-    public ResponseEntity<Seller> updateSeller(@PathVariable String authUser, @RequestBody SellerDTO sellerInfo) {
-        Seller updatedSeller = sellerService.updateSellerInfo(authUser, sellerInfo);
+    public ResponseEntity<SellerDTO> updateSeller(@PathVariable String authUser, @RequestBody SellerDTO sellerInfo) {
+        SellerDTO updatedSeller = sellerService.updateSellerInfo(authUser, sellerInfo);
         return ResponseEntity.ok().body(updatedSeller);
     }
 }

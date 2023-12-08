@@ -1,6 +1,7 @@
 package com.lingua.market.web.dto;
 
 public class SellerDTO {
+    private Long id;
     private String authUser;
     private String city;
     private String state;
@@ -9,6 +10,12 @@ public class SellerDTO {
     private String stripeAccountId;
     private String stripeStatus;
 
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getAuthUser() {
         return this.authUser;
     }

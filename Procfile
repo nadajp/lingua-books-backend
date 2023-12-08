@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.lingua.market
+web: java -jar target/lingua-books-0.0.1-SNAPSHOT.jar

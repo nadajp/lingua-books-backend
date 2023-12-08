@@ -52,7 +52,7 @@ public class SellerService {
         return modelMapper.map(seller, SellerDTO.class);
     }    
 
-    public Seller createSeller(SellerDTO sellerDTO) throws SellerAlreadyExistsException {
+    public SellerDTO createSeller(SellerDTO sellerDTO) throws SellerAlreadyExistsException {
         Optional<Seller> existingSellerByAuthUser = sellerRepository.findByAuthUser(sellerDTO.getAuthUser());
     
         // If the display name exists and is associated with a different authUser, throw an exception
@@ -63,15 +63,11 @@ public class SellerService {
 
         StripeStatus stripeStatus;
         try {
-            System.out.println(null == sellerDTO.getStripeStatus() ? "null" : sellerDTO.getStripeStatus());
             stripeStatus = StripeStatus.valueOf(sellerDTO.getStripeStatus().toUpperCase());
         } catch (IllegalArgumentException e) {
-            // Handle the case where the string does not match any enum constant
-            // This might involve throwing a custom exception or handling it some other way
             throw new IllegalArgumentException("Invalid stripe status: " + sellerDTO.getStripeStatus());
         }
     
-        // If a seller with the given authUserId exists, update the fields
         if (existingSellerByAuthUser.isPresent()) {
             Seller existingSeller = existingSellerByAuthUser.get();
             existingSeller.setCity(sellerDTO.getCity());
@@ -79,10 +75,10 @@ public class SellerService {
             existingSeller.setCountry(sellerDTO.getCountry());
             existingSeller.setStripeAccountId(sellerDTO.getStripeAccountId());
             existingSeller.setStripeStatus(stripeStatus);
-            return sellerRepository.save(existingSeller);
+            Seller savedSeller = sellerRepository.save(existingSeller);
+            return modelMapper.map(savedSeller, SellerDTO.class);   
         }
     
-        // If not, create a new seller
         Seller seller = new Seller();
         User user = userRepository.findByAuthUserId(sellerDTO.getAuthUser()).get();
         seller.setUser(user);
@@ -92,11 +88,12 @@ public class SellerService {
         seller.setCountry(sellerDTO.getCountry());
         seller.setStripeAccountId(sellerDTO.getStripeAccountId());
         seller.setStripeStatus(stripeStatus);
-        return sellerRepository.save(seller);
+        sellerRepository.save(seller);
+        return modelMapper.map(seller, SellerDTO.class);
     }
     
 
-    public Seller updateSellerInfo(String authUser, SellerDTO sellerInfo) {
+    public SellerDTO updateSellerInfo(String authUser, SellerDTO sellerInfo) {
         Seller seller = sellerRepository.findByAuthUser(authUser)
                 .orElseThrow(() -> new ResourceNotFoundException("Seller not found for this authUser"));
         
@@ -107,6 +104,7 @@ public class SellerService {
         if (sellerInfo.getStripeStatus() != null) {
             seller.setStripeStatus(StripeStatus.valueOf(sellerInfo.getStripeStatus().toUpperCase()));
         }
-        return sellerRepository.save(seller);
+        sellerRepository.save(seller);
+        return modelMapper.map(seller, SellerDTO.class);
     }
 }
