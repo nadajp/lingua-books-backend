@@ -1,8 +1,9 @@
 package com.lingua.market.persistence.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
-
+@ActiveProfiles("test")
 public class ProductTest {
     @Test
     public void testGetterAndSetterMethods() {

@@ -8,8 +8,11 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -21,7 +24,8 @@ import com.lingua.market.web.controller.CategoryController;
 import com.lingua.market.web.dto.CategoryDTO;
 import com.lingua.market.web.dto.SubcategoryDTO;
 
-@SpringBootTest
+@WebMvcTest(CategoryController.class)
+@ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
 public class CategoryControllerTest {
 
@@ -62,23 +66,23 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void createCategoryTest() throws Exception {
-        CategoryDTO category = this.getMockCategory();
-        when(categoryService.createCategory("Nonfiction", "nonfiction"))
-        .thenReturn(category);
+        public void createCategoryTest() throws Exception {
+            CategoryDTO category = this.getMockCategory();
+            when(categoryService.createCategory("Nonfiction", "nonfiction"))
+            .thenReturn(category);
 
-        String categoryJson = new ObjectMapper().writeValueAsString(category);
+            String categoryJson = new ObjectMapper().writeValueAsString(category);
 
-        MvcResult result = mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/v1/categories")
-            .contentType("application/json")
-            .content(categoryJson))
-            .andExpect(MockMvcResultMatchers.status().isCreated())
-            .andReturn();
+            MvcResult result = mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/v1/categories")
+                .contentType("application/json")
+                .content(categoryJson))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andReturn();
 
-        String response = result.getResponse().getContentAsString();
-        assertEquals(categoryJson, response);
-    }
+            String response = result.getResponse().getContentAsString();
+            assertEquals(categoryJson, response);
+        }
     @Test
     public void createSubcategoryTest() throws Exception {
         SubcategoryDTO subcategory = this.getMockSubcategory();

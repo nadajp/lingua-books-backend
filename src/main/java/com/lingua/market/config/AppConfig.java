@@ -12,9 +12,10 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
 @EntityScan("com.lingua.market")
-@ComponentScan("com.lingua.market")
 @EnableJpaRepositories("com.lingua.market.persistence.dao")
+@ComponentScan("com.lingua.market")
 public class AppConfig {
+
     @Bean
     ModelMapper modelMapper() {
        return new ModelMapper();

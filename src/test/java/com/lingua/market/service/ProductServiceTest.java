@@ -21,6 +21,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.lingua.market.web.dto.ProductDTO;
@@ -30,6 +31,7 @@ import com.lingua.market.persistence.model.Language;
 import com.lingua.market.persistence.model.Product;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 public class ProductServiceTest {
 
     @Mock

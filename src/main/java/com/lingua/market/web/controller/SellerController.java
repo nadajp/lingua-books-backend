@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lingua.market.persistence.model.Seller;
 import com.lingua.market.service.SellerService;
 import com.lingua.market.web.dto.SellerDTO;
 import com.lingua.market.web.exception.SellerAlreadyExistsException;
