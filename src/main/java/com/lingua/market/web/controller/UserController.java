@@ -1,6 +1,7 @@
 package com.lingua.market.web.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lingua.market.web.dto.ApiResponse;
 import com.lingua.market.web.dto.UserDTO;
 import com.lingua.market.web.exception.UserAlreadyExistsException;
 
@@ -34,10 +34,10 @@ public class UserController {
 		this.userService = userService;
 	}
 
-    // @GetMapping
-    // public ResponseEntity<List<UserDTO>> getAllUsers() {
-    //     return ResponseEntity.ok().body(this.userService.getAllUsers());
-    // }
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok().body(this.userService.getAllUsers());
+    }
 
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ResponseEntity<?> registerUser(@RequestBody @Valid UserDTO userRegistrationDTO) {
@@ -45,8 +45,7 @@ public class UserController {
             userService.registerUser(userRegistrationDTO);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
         } catch (UserAlreadyExistsException ex) {
-            return new ResponseEntity<>(new ApiResponse(false, ex.getMessage()),
-                HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
 	}
 
