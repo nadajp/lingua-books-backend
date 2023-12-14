@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,6 @@ import com.lingua.market.service.CategoryService;
 import com.lingua.market.web.dto.CategoryDTO;
 import com.lingua.market.web.dto.SubcategoryDTO;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class CategoryController {
 

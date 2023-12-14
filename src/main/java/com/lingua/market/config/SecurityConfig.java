@@ -26,11 +26,14 @@ import com.lingua.market.oauth.AudienceValidator;
 @EnableWebSecurity
 public class SecurityConfig {
 
-   @Value("${spring.security.oauth2.resourceserver.jwt.audiences}")
-   private String audience;
+    @Value("${app.cors.origins}")
+    private String[] corsOrigins;
 
-   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
-   private String issuer;
+    @Value("${spring.security.oauth2.resourceserver.jwt.audiences}")
+    private String audience;
+
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+    private String issuer;
 
     @Bean
     PasswordEncoder encoder() {
@@ -42,7 +45,7 @@ public class SecurityConfig {
 
         final CorsConfiguration configuration = new CorsConfiguration();
         
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://127.0.0.1:3000"));
+        configuration.setAllowedOrigins(Arrays.asList(corsOrigins));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
