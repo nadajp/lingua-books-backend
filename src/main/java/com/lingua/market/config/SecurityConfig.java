@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/sellers").authenticated()
                 .requestMatchers("/api/v1/users/*").authenticated()
-                .requestMatchers("/api/admin/*").hasAuthority("SCOPE_admin")
+                .requestMatchers(HttpMethod.POST, "/api/v1/categories", "/api/v1/subcategories").hasAuthority("SCOPE_admin")
                 .requestMatchers(HttpMethod.POST, "api/v1/products/").hasAuthority("SCOPE_create:product")
                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
