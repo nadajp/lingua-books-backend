@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -63,18 +64,29 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeRequests ->
              authorizeRequests
-                .requestMatchers(HttpMethod.GET, "/api/v1/categories", "api/v1/languages", "/api/v1/products/**", "/error")
+                .requestMatchers(HttpMethod.GET, "/api/v1/categories", "api/v1/languages", "/api/v1/products/**", "/error", "/logout")
                 .permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/sellers").authenticated()
                 .requestMatchers("/api/v1/users/*").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/v1/categories", "/api/v1/subcategories").hasAuthority("SCOPE_admin")
-                .requestMatchers(HttpMethod.POST, "api/v1/products/").hasAuthority("SCOPE_create:product")
+                .requestMatchers(HttpMethod.POST, "/api/v1/categories", "/api/v1/subcategories", "/api/v1/languages").hasAuthority("admin")
+                .requestMatchers(HttpMethod.POST, "api/v1/products/").hasAuthority("create:product")
                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
-                .jwt(Customizer.withDefaults()
-                )
-            );
+                                .jwt(jwt -> jwt.decoder(jwtDecoder())
+                                .jwtAuthenticationConverter(makePermissionsConverter())));
+  
         return http.build();
+    }
+
+    JwtAuthenticationConverter makePermissionsConverter() {
+        final var jwtAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtAuthoritiesConverter.setAuthoritiesClaimName("permissions");
+        jwtAuthoritiesConverter.setAuthorityPrefix("");
+
+        final var jwtAuthConverter = new JwtAuthenticationConverter();
+        jwtAuthConverter.setJwtGrantedAuthoritiesConverter(jwtAuthoritiesConverter);
+
+        return jwtAuthConverter;
     }
 
     @Bean

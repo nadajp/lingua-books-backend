@@ -44,7 +44,7 @@ public class CategoryController {
     public ResponseEntity<CategoryDTO> createCategory (@Validated @RequestBody Category category) {
             CategoryDTO categoryDTO = categoryService.createCategory(category.getName(),
             category.getSlug());
-            
+            System.out.println(categoryDTO);
             return ResponseEntity.created(URI.create("/categories/" + categoryDTO.getId()))
             .body(categoryDTO);
     }
