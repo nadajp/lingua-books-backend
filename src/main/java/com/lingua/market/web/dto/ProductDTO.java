@@ -20,12 +20,12 @@ public class ProductDTO {
     private String dimensionLength;
     private String dimensionWidth;
     private String imageUrl;
-    private Long sellerId;
+    private String sellerId;
 
     public ProductDTO() {}
     
     public ProductDTO(String name, String author, Double price, String condition, 
-    Language language, Long categoryId, Long subcategoryId, Long sellerId) {
+    Language language, Long categoryId, Long subcategoryId, String sellerId) {
         this.name = name;
         this.author = author;
         this.price = price;
@@ -35,7 +35,6 @@ public class ProductDTO {
         this.subcategoryId = subcategoryId;
         this.sellerId = sellerId;
     }
-
     public Long getId() {
         return id;
     }
@@ -66,10 +65,10 @@ public class ProductDTO {
     public void setPrice(Double price) {
         this.price = price;
     }
-    public Long getSellerId() {
+    public String getSellerId() {
         return sellerId;
     }
-    public void setSellerId(Long sellerId) {
+    public void setSellerId(String sellerId) {
         this.sellerId = sellerId;
     }
     public String getAuthor() {

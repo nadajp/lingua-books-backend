@@ -46,7 +46,7 @@ public class Product {
     private String condition;
     
     @Column(name = "seller_id")
-    private Long sellerId;
+    private String sellerId;
 
     @Column(name = "seller_name")
     private String sellerName;
@@ -92,10 +92,10 @@ public class Product {
     public void setId(Long id) {
         this.id = id;
     }
-    public Long getSellerId() {
+    public String getSellerId() {
         return sellerId;
     }
-    public void setSellerId(Long sellerId) {
+    public void setSellerId(String sellerId) {
         this.sellerId = sellerId;
     }
     public String getSellerName() {
