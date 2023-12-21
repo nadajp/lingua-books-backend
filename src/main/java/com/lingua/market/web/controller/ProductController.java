@@ -70,5 +70,4 @@ public class ProductController {
         return ResponseEntity.created(URI.create("/products/" + createdProduct.getId()))
         .body(createdProduct);
     }
-
 }
