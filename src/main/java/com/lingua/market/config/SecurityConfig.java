@@ -69,7 +69,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/v1/sellers").authenticated()
                 .requestMatchers("/api/v1/users/*").authenticated()
                 .requestMatchers(HttpMethod.POST, "/api/v1/categories", "/api/v1/subcategories", "/api/v1/languages").hasAuthority("admin")
-                .requestMatchers(HttpMethod.POST, "api/v1/products/").hasAuthority("create:product")
+                .requestMatchers(HttpMethod.POST, "api/v1/products").hasAuthority("create:product")
                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                                 .jwt(jwt -> jwt.decoder(jwtDecoder())
