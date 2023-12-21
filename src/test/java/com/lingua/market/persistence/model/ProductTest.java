@@ -12,7 +12,7 @@ public class ProductTest {
         product.setName("The Hobbit");
         product.setTitle("J.R.R. Tolkien");
         product.setPrice(15.99);
-        product.setSellerId(3457L);
+        product.setSellerId("auth0|12345");
         product.setId(1L);
 
         assertEquals("The Hobbit", product.getName());

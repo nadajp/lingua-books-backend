@@ -56,7 +56,7 @@ public class ProductControllerTest {
                                             10.99, 
                                             "Good", 
                                             language, 
-                                            1L, 1L, 345L);
+                                            1L, 1L, "auth0|12345");
 
         when(productService.createProduct(any(ProductDTO.class), any(MultipartFile.class)))
             .thenReturn(product); 
@@ -111,7 +111,7 @@ public class ProductControllerTest {
         product.setPrice(10.99);
         product.setDescription("Good");
         product.setLanguage(new Language(1L, "Croatian"));
-        product.setSellerId(1L);
+        product.setSellerId("auth0|12345");
         product.setCategoryId(345L);
         return product;
     }
