@@ -39,9 +39,9 @@ public class ProductService {
     public ProductDTO createProduct(ProductDTO productDto, MultipartFile imageFile) throws IOException {
         Product product = modelMapper.map(productDto, Product.class);
 
-        Language language = languageRepository.findById(productDto.getLanguage().getId())
+        Language language = languageRepository.findById(productDto.getLanguageId())
                 .orElseThrow(() -> 
-                new ResourceNotFoundException("Language not found for this id :: " + productDto.getLanguage().getId()));
+                new ResourceNotFoundException("Language not found for this id :: " + productDto.getLanguageId()));
     
         product.setLanguage(language);
         product = productRepository.save(product);

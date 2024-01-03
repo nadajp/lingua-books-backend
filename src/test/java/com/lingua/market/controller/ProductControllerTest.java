@@ -48,14 +48,12 @@ public class ProductControllerTest {
     ProductController productController;
 
     @Test
-    public void createProduct() throws Exception {
-        Language language = new Language(1L, "Croatian");
-        
+    public void createProduct() throws Exception {        
         ProductDTO product = new ProductDTO("Osmi Povjerenik", 
                                             "Renato Baretic", 
                                             10.99, 
                                             "Good", 
-                                            language, 
+                                            1L, 
                                             1L, 1L, "auth0|12345");
 
         when(productService.createProduct(any(ProductDTO.class), any(MultipartFile.class)))

@@ -67,12 +67,7 @@ public class ProductServiceTest {
         productDto.setName("Test Product");
         productDto.setDescription("Test Product Description");
         productDto.setPrice(10.0);
-
-        Language language = new Language();
-        language.setId(1L);
-        language.setName(LANGUAGE);
-
-        productDto.setLanguage(language);
+        productDto.setLanguageId(1L);
 
         byte[] fileBytes = new byte[] { 1, 2, 3 };
         InputStream is = new ByteArrayInputStream(fileBytes);
@@ -81,6 +76,9 @@ public class ProductServiceTest {
         Product product = modelMapper.map(productDto, Product.class);
         product.setId(12345678L);
 
+        Language language = new Language();
+        language.setId(1L);
+        language.setName(LANGUAGE);
         Optional<Language> returnedLanguage = Optional.of(language);
 
         when(languageRepository.findById(any())).thenReturn(returnedLanguage);
@@ -99,7 +97,7 @@ public class ProductServiceTest {
         assertEquals(productDto.getDescription(), createdProduct.getDescription());
         assertEquals(productDto.getPrice(), createdProduct.getPrice());
         assertEquals(expectedImageUrl, createdProduct.getImageUrl());
-        assertEquals(LANGUAGE, createdProduct.getLanguage().getName());
+        assertEquals(productDto.getLanguageId(), createdProduct.getLanguageId());
     }
 
 }

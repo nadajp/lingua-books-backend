@@ -57,8 +57,7 @@ public class ProductController {
 
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<ProductDTO> createProduct (@RequestPart("product") @Validated ProductDTO productDto,
-                                                     @RequestPart(name = "image", required = false) MultipartFile imageFile) {
-        
+                                                     @RequestPart(name = "image", required = false) MultipartFile imageFile) {     
         System.out.println("Reached createProduct in ProductController");                                                
         ProductDTO createdProduct = null;
         try {

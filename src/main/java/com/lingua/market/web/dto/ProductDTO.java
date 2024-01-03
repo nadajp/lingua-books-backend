@@ -1,14 +1,12 @@
 package com.lingua.market.web.dto;
 
-import com.lingua.market.persistence.model.Language;
-
 public class ProductDTO {
     private Long id;
     private String name;
     private String author;
     private Double price;
     private String condition;
-    private Language language;
+    private Long languageId;
     private String description;
     private Long categoryId;
     private Long subcategoryId;
@@ -25,21 +23,22 @@ public class ProductDTO {
     public ProductDTO() {}
     
     public ProductDTO(String name, String author, Double price, String condition, 
-    Language language, Long categoryId, Long subcategoryId, String sellerId) {
+    Long languageId, Long categoryId, Long subcategoryId, String sellerId) {
         this.name = name;
         this.author = author;
         this.price = price;
         this.condition = condition;
-        this.language = language;
+        this.languageId = languageId;
         this.categoryId = categoryId;
         this.subcategoryId = subcategoryId;
         this.sellerId = sellerId;
     }
+
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long productId) {
+        this.id = productId;
     }
     public String getName() {
         return name;
@@ -53,11 +52,11 @@ public class ProductDTO {
     public void setTitle(String title) {
         this.author = title;
     }
-    public Language getLanguage() {
-        return language;
+    public Long getLanguageId() {
+        return this.languageId;
     }
-    public void setLanguage(Language language) {
-        this.language = language;
+    public void setLanguageId(Long languageId) {
+        this.languageId = languageId;
     }
     public Double getPrice() {
         return price;

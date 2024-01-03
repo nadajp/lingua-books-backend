@@ -93,7 +93,7 @@ public class Product {
         this.id = id;
     }
     public String getSellerId() {
-        return sellerId;
+        return this.sellerId;
     }
     public void setSellerId(String sellerId) {
         this.sellerId = sellerId;
