@@ -46,7 +46,5 @@ public class AppConfig {
                 .build();
         return s3;
     }
-
-
 }
    

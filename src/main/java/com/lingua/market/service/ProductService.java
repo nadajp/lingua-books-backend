@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,12 @@ public class ProductService {
     private final AmazonS3 amazonS3;
     
     private final ModelMapper modelMapper;
+
+    @Value("${aws.bucket.name}")
+    private String bucketName;
+
+    @Value("${aws.bucket.key}")
+    private String bucketKey;
 
     public ProductService(ProductRepository productRepository, 
                           LanguageRepository languageRepository, 
@@ -63,8 +70,7 @@ public class ProductService {
     private String uploadImage(MultipartFile imageFile) throws IOException {
         String fileName = UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
 
-        String bucketName = "lingua-books-images";
-        String key = "images/" + fileName;
+        String key =  bucketKey + '/' + fileName;
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(imageFile.getContentType());
