@@ -45,6 +45,7 @@ public class Product {
     
     private String condition;
     
+    // this is their auth user id
     @Column(name = "seller_id")
     private String sellerId;
 

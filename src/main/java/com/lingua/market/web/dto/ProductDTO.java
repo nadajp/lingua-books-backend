@@ -19,6 +19,7 @@ public class ProductDTO {
     private String dimensionWidth;
     private String imageUrl;
     private String sellerId;
+    private String sellerName;
 
     public ProductDTO() {}
     
@@ -147,5 +148,11 @@ public class ProductDTO {
     }
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+    public String getSellerName() {
+        return sellerName;
+    }
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 }

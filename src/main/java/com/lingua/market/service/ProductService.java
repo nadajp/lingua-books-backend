@@ -12,8 +12,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.lingua.market.persistence.dao.LanguageRepository;
 import com.lingua.market.persistence.dao.ProductRepository;
+import com.lingua.market.persistence.dao.SellerRepository;
 import com.lingua.market.persistence.model.Language;
 import com.lingua.market.persistence.model.Product;
+import com.lingua.market.persistence.model.Seller;
 import com.lingua.market.web.dto.ProductDTO;
 import com.lingua.market.web.exception.ResourceNotFoundException;
 
@@ -23,6 +25,8 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private final LanguageRepository languageRepository;
+
+    private final SellerRepository sellerRepository;
     
     private final AmazonS3 amazonS3;
     
@@ -36,9 +40,11 @@ public class ProductService {
 
     public ProductService(ProductRepository productRepository, 
                           LanguageRepository languageRepository, 
+                          SellerRepository sellerRepository,
                           AmazonS3 amazonS3, ModelMapper modelMapper) {
         this.productRepository = productRepository;
         this.languageRepository = languageRepository;
+        this.sellerRepository = sellerRepository;
         this.amazonS3 = amazonS3;
         this.modelMapper = modelMapper;
     }
@@ -50,7 +56,12 @@ public class ProductService {
                 .orElseThrow(() -> 
                 new ResourceNotFoundException("Language not found for this id :: " + productDto.getLanguageId()));
     
+        Seller seller = sellerRepository.findByAuthUser(productDto.getSellerId())
+                .orElseThrow(() -> 
+                new ResourceNotFoundException("Seller not found for this id :: " + productDto.getSellerId()));
+
         product.setLanguage(language);
+        product.setSellerName(seller.getDisplayName());
         product = productRepository.save(product);
 
         if (imageFile != null) {

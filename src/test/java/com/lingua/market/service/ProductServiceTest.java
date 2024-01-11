@@ -27,8 +27,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.lingua.market.web.dto.ProductDTO;
 import com.lingua.market.persistence.dao.LanguageRepository;
 import com.lingua.market.persistence.dao.ProductRepository;
+import com.lingua.market.persistence.dao.SellerRepository;
 import com.lingua.market.persistence.model.Language;
 import com.lingua.market.persistence.model.Product;
+import com.lingua.market.persistence.model.Seller;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
@@ -39,6 +41,9 @@ public class ProductServiceTest {
 
     @Mock
     private LanguageRepository languageRepository;
+
+    @Mock
+    private SellerRepository sellerRepository;
 
     @Mock
     private AmazonS3 amazonS3;
@@ -57,7 +62,8 @@ public class ProductServiceTest {
     @BeforeEach
     public void setUp() {
         modelMapper = new ModelMapper();
-        productService = new ProductService(productRepository, languageRepository, amazonS3, modelMapper);
+        productService = new ProductService(productRepository, languageRepository, sellerRepository,
+                        amazonS3, modelMapper);
     }
 
     @Test
@@ -81,7 +87,12 @@ public class ProductServiceTest {
         language.setName(LANGUAGE);
         Optional<Language> returnedLanguage = Optional.of(language);
 
+        Seller seller = new Seller();
+        seller.setAuthUser("auth|12345");
+        seller.setDisplayName("Ana Banana");
+
         when(languageRepository.findById(any())).thenReturn(returnedLanguage);
+        when(sellerRepository.findByAuthUser(any())).thenReturn(Optional.of(seller));
         when(productRepository.save(any())).thenReturn(product);
 
         UUID mockUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -98,6 +109,7 @@ public class ProductServiceTest {
         assertEquals(productDto.getPrice(), createdProduct.getPrice());
         assertEquals(expectedImageUrl, createdProduct.getImageUrl());
         assertEquals(productDto.getLanguageId(), createdProduct.getLanguageId());
+        assertEquals(seller.getDisplayName(), createdProduct.getSellerName());
     }
 
 }
