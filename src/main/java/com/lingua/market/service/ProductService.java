@@ -61,7 +61,7 @@ public class ProductService {
                 new ResourceNotFoundException("Seller not found for this id :: " + productDto.getSellerId()));
 
         product.setLanguage(language);
-        product.setSellerName(seller.getDisplayName());
+        product.setSellerName(seller.getDisplayName() != null ? seller.getDisplayName() : "Lingua Books");
         product = productRepository.save(product);
 
         if (imageFile != null) {
