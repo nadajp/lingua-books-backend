@@ -50,7 +50,7 @@ public class SellerController {
     }    
 
     @PutMapping("/{authUser}")
-    public ResponseEntity<SellerDTO> updateSeller(@PathVariable String authUser, @RequestBody SellerDTO sellerInfo) {
+    public ResponseEntity<SellerDTO> updateSeller(@PathVariable(value = "authUser") String authUser, @RequestBody SellerDTO sellerInfo) {
         SellerDTO updatedSeller = sellerService.updateSellerInfo(authUser, sellerInfo);
         return ResponseEntity.ok().body(updatedSeller);
     }
